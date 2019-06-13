@@ -47,3 +47,4 @@ map <Leader>, :FlowRun<CR>
 
 map mm :VimFiler<cr>
 map s :wall<cr>
+echo "hello world"
