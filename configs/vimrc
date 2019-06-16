@@ -46,5 +46,5 @@ map <Leader>k :wincmd k<CR>
 map <Leader>, :FlowRun<CR>
 
 map mm :VimFiler<cr>
+map mq :q<cr>
 map s :wall<cr>
-echo "hello world"
