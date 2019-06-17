@@ -4,15 +4,13 @@ import (
 	"github.com/spf13/cobra"
 	"fmt"
 	"os"
+	"github.com/boltdb/bolt"
+	"log"
+	"bufio"
+	"strings"
 )
 /* now what you can do with this is have this individual cobra commands use other cobra commands
 */
-
-func loako(){
-	for i:=0;i<10;i++{
-		fmt.Print("loako ")
-	}
-}
 
 var rootCmd = &cobra.Command{
 	Use: "root",
@@ -27,12 +25,24 @@ var rootCmd = &cobra.Command{
 func main(){
 	rootCmd.AddCommand(listCmd)
 	rootCmd.AddCommand(createListCmd)
-	rootCmd.AddCommand(helpCmd)
 	rootCmd.Execute()
 	if err := rootCmd.Execute(); err != nil {
 		fmt.Println(err)
 		os.Exit(1)
 	} // this is the initial test to see that the above var is okay 
+	db, err := bolt.Open("database.db", 0600, nil) // this means that database now stands as a buffer for information
+	var work list{
+		head: nil,
+		tail: nil,
+		_size: 0,
+	}
+
+	if err != nil {
+		log.Fatal(err) // the same as print and the OS.Exit(1)
+	}
+	fmt.Println("\n------------------------------------------------------------------")
+	err = db.View(
+	defer db.Close() // this is to ensure that regardless of what gappens in the code earlier, database closes
 }
 
 var listCmd = &cobra.Command{
@@ -53,5 +63,11 @@ var createListCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string){
 		loako()
 	},
+}
+
+func loako(){
+	for i:=0;i<10;i++{
+		fmt.Print("4 loako")
+	}
 }
 

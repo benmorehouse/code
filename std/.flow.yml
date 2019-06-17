@@ -1,0 +1,10 @@
+---
+default:
+        cmd: | #!/usr/bin/env bash
+
+
+                clear
+                cd ~/code/std
+
+                go build  -o /tmp/std .
+                /tmp/std

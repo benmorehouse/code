@@ -1,0 +1,12 @@
+---
+default:
+        cmd: | #/usr/bin/env bash
+
+
+                clear
+
+                cd ~/programs/golang-zombies/
+
+
+                go build  -o /tmp/golang-zombies .
+                /tmp/golang-zombies
