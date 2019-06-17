@@ -5,8 +5,8 @@ default:
 
                 clear
 
-                cd ~/programs/golang-zombies/
+                cd ~/code/autofill
 
 
-                go build  -o /tmp/golang-zombies .
-                /tmp/golang-zombies
+                go build  -o /tmp/autofill .
+                /tmp/autofill
