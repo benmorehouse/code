@@ -14,6 +14,9 @@ alias w='cd ~/programs/work'
 alias .='cd ../'
 alias tasks='cd ~/programs/golang-std; go run main.go list.go'
 alias ol="cd ~/programs/work; vim"
+alias gs='git status --short'
+alias gc='git commit --all'
+alias gp='git push'
 
 export MB_KEY=ODJkYzk4ZDlmZjU0NmIyZDUwYWIzMjBlMTViMzFjYmU.gSsWxLeQKCc7FeAICM9WCW3KcGWWrb5dwlUU17unIQR15TIYbI6No63mzYdkbQsWKCEcglTd8uh7UlESxiFDNw
 
