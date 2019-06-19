@@ -20,29 +20,29 @@ func main(){
 	fmt.Println("This is a tool that will be used to parse through files and change the \nnames of the file that we are working on to a new file which will be a new scraper/etc.\n")
 	fmt.Println("/***********************************************************************/\n")
 
-	// This is just the starting interface 
 	fmt.Print("Enter in your website (EX: buzzfeed) : ")
-	var file string
-	fmt.Scan(&file)
-	err := httpCheck(file)
-	file = strings.ToLower(file)
+	var website string
+	fmt.Scan(&website)
+	err := httpCheck(website)
 
 	if err != nil{
 		fmt.Println("Error: Not a valid website")
 		os.Exit(1)
 	}
 
+	website = strings.ToLower(website)
 	fmt.Print("Now enter in the new website scraper : ")
-	var newFile string
-	fmt.Scan(&newFile)
-	err = httpCheck(newFile)
-	//origNewFile := newFile // used later on in the process
-	newFile = strings.ToLower(newFile)
+	var newWebsite string
+	fmt.Scan(&newWebsite)
+	err = httpCheck(newWebsite)
 
 	if err != nil{
 		fmt.Println("Error: Not a valid website")
 		os.Exit(1)
 	}
+
+	//origNewWebsite := newWebsite // used later on in the process
+	newWebsite = strings.ToLower(newWebsite)
 
 	//data.txt is what we will use for now, and we will import to new data
 
@@ -52,36 +52,16 @@ func main(){
 	if err != nil{
 		fmt.Println("error: file not able to be opened")
 	}
+
 	scan := bufio.NewScanner(f)
-	channelCount:=0
+	//channelCount:=0
 	for scan.Scan(){ // we read in the string line by line 
-		var temp string = scan.Text()
-		for i:=0;i<len(temp);i++{ // this will loop through each line character by character
-			if temp[i]==file[0]{ //need to trim the end off and also lower the B
-				if checkMatch(file, newFile, temp, i){
-					channelCount++
-					// here is where i need to write the change function
-				}
-			}
-
-		}
+		// use the field function to scan through each element. Then change the ones that match
+		// will convert the string to all lower
+		// only if the first letter is what we want
+		temp := strings.Fields(scan.Text())
+		fmt.Println(temp)
 	}
-	fmt.Println(channelCount,"buzzfeeds were found")
+
 }
 
-func changTempToOrig(temp string, OrigNewFile string){
-// gotta do a lot of experimentation on this. It needs to delete it then add in the new one all where it was supposed to be
-	
-}
-
-func checkMatch(file string, newFile string, temp string, i int) bool{
-	place := 0
-	for j:=i;j<i+len(file)-1;j++{
-		if temp[j] != file[place]{
-			return false
-		}else{
-			place++
-		}
-	}
-	return true
-}
