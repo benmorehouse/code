@@ -1,0 +1,11 @@
+---
+default:
+        cmd: | #!/usr/bin/env bash
+
+
+                clear
+
+                cd ~/code/autotext/
+
+                go build  -o /tmp/autotext .
+                /tmp/autotext

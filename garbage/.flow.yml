@@ -1,0 +1,10 @@
+---
+default:
+        cmd: | #!/usr/bin/env bash
+
+
+                clear
+                cd ~/code/garbage
+
+                go build  -o /tmp/garbage .
+                /tmp/garbage
