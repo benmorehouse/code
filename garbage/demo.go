@@ -5,8 +5,7 @@ import(
 )
 
 func main(){
-	name := "ben"
-	number := "5136028241"
+	output:="hello world"
+	output+="\b hello "
+	fmt.Println(output)
 }
-
-
