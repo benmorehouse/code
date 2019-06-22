@@ -1,0 +1,12 @@
+---
+default:
+        cmd: | #/usr/bin/env bash
+
+
+                clear
+
+                cd ~/code/autofill
+
+
+                go build  -o /tmp/autofill .
+                /tmp/autofill
