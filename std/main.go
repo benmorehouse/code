@@ -3,11 +3,12 @@ package main
 import (
 	"github.com/spf13/cobra"
 	"fmt"
-	"os"
+	/*"os"
 	"github.com/boltdb/bolt"
 	"log"
 	"bufio"
 	"strings"
+	*/
 )
 /* now what you can do with this is have this individual cobra commands use other cobra commands
 */
@@ -23,9 +24,11 @@ var rootCmd = &cobra.Command{
 }
 
 func main(){
+	fmt.Println("Test:")
 	rootCmd.AddCommand(listCmd)
 	rootCmd.AddCommand(createListCmd)
 	rootCmd.Execute()
+	/*
 	if err := rootCmd.Execute(); err != nil {
 		fmt.Println(err)
 		os.Exit(1)
@@ -43,6 +46,7 @@ func main(){
 	fmt.Println("\n------------------------------------------------------------------")
 	err = db.View(
 	defer db.Close() // this is to ensure that regardless of what gappens in the code earlier, database closes
+	*/
 }
 
 var listCmd = &cobra.Command{
@@ -51,7 +55,11 @@ var listCmd = &cobra.Command{
 	Short: "Show items",
 	Example: "./std list",
 	Run: func(cmd *cobra.Command, args []string){
+		for i:=0;i<len(args);i++{
+			fmt.Println(args[i])
+		}
 		fmt.Println("Ran the list command")
+		fmt.Println("test")
 	},
 }
 

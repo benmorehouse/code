@@ -2,22 +2,16 @@ package main
 
 import (
 	"fmt"
+	"os"
 )
 
 func main(){
-/*	directory,_:=os.Getwd()
-	fmt.Println(directory)
-	directory+="\b\b\b"
-	directory+="go"
-*/
-	string1 :="hello"
-	string2 :="hellowworld"
-	var strings[]string
-	strings = append(strings,string1)
-	strings = append(strings,string2)
-	fmt.Println(len(strings))
+	before,_:=os.Getwd()
+	before += "/demo.txt"
+	after,_:=os.Getwd()
+	after += "/demo.go"
+	fmt.Println(before)
+	fmt.Println(after)
+
 }
-
-
-
 
