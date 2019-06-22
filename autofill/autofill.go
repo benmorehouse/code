@@ -9,6 +9,7 @@ import(
 	"strings"
 )
 
+// This is for you to check and make sure the website still functions
 func httpCheck(file string)(error){
 	_ ,err := http.Get("http://"+file+".com")
 	return err
@@ -19,7 +20,7 @@ func main(){
 	fmt.Println("/***********************************************************************/\n")
 	fmt.Println("This is a tool that will be used to parse through files and change the \nnames of the file that we are working on to a new file which will be a new scraper/etc.\n")
 	fmt.Println("/***********************************************************************/\n")
-
+	
 	fmt.Print("Enter in your website (EX: buzzfeed) : ")
 	var website string
 	fmt.Scan(&website)
@@ -62,6 +63,5 @@ func main(){
 		temp := strings.Fields(scan.Text())
 		fmt.Println(temp)
 	}
-
 }
 

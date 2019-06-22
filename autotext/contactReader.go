@@ -64,7 +64,6 @@ func infoReader()[]orientee{
 		}
 		contacts = append(contacts,contactsTemp)
 	}
-	
 	return contacts
 }
 
