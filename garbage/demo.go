@@ -1,13 +1,23 @@
 package main
 
-import(
+import (
 	"fmt"
-	"os"
-	"os/exec"
 )
 
 func main(){
-	var input string
-	input = oascript sendMessage.applescipt 5136028241 "hello"
+/*	directory,_:=os.Getwd()
+	fmt.Println(directory)
+	directory+="\b\b\b"
+	directory+="go"
+*/
+	string1 :="hello"
+	string2 :="hellowworld"
+	var strings[]string
+	strings = append(strings,string1)
+	strings = append(strings,string2)
+	fmt.Println(len(strings))
 }
+
+
+
 

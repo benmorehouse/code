@@ -7,6 +7,7 @@ import(
 	"bufio"
 	"flag"
 	"strings"
+	"log"
 )
 
 // This is for you to check and make sure the website still functions
@@ -20,48 +21,66 @@ func main(){
 	fmt.Println("/***********************************************************************/\n")
 	fmt.Println("This is a tool that will be used to parse through files and change the \nnames of the file that we are working on to a new file which will be a new scraper/etc.\n")
 	fmt.Println("/***********************************************************************/\n")
-	
+
 	fmt.Print("Enter in your website (EX: buzzfeed) : ")
-	var website string
-	fmt.Scan(&website)
-	err := httpCheck(website)
+	var input string
+	fmt.Scan(&input)
+	err := httpCheck(input)
 
 	if err != nil{
 		fmt.Println("Error: Not a valid website")
 		os.Exit(1)
 	}
 
-	website = strings.ToLower(website)
+	currentWebsite := website{
+		original: input,
+		upper: strings.ToUpper(input),
+		lower: strings.ToLower(input),
+	}
+
 	fmt.Print("Now enter in the new website scraper : ")
-	var newWebsite string
-	fmt.Scan(&newWebsite)
-	err = httpCheck(newWebsite)
+	fmt.Scan(&input)
+	err = httpCheck(input)
 
-	if err != nil{
-		fmt.Println("Error: Not a valid website")
+	f, err := os.Create(input + ".txt") // this is the file writer
+
+	if err !=nil{
+		fmt.Println("err:",err)
 		os.Exit(1)
 	}
 
-	//origNewWebsite := newWebsite // used later on in the process
-	newWebsite = strings.ToLower(newWebsite)
-
+	newWebsite := website{
+		original: input,
+	}
+	fmt.Println(newWebsite)
 	//data.txt is what we will use for now, and we will import to new data
+	// also gotta rename the file here from a go file to txt file before we open 
 
-	fptr := flag.String("filepath","data.txt","") // the pointer needed to do os.Open()
+	fptr := flag.String("filepath",currentWebsite.original+".txt","") // the pointer needed to do os.Open()
 	flag.Parse()
-	f, err:= os.Open(*fptr) // file is the returned value of os.open. It is what we read through 
+	file, err := os.Open(*fptr) // file is the returned value of os.open. It is what we read through 
 	if err != nil{
 		fmt.Println("error: file not able to be opened")
 	}
 
-	scan := bufio.NewScanner(f)
-	//channelCount:=0
-	for scan.Scan(){ // we read in the string line by line 
-		// use the field function to scan through each element. Then change the ones that match
-		// will convert the string to all lower
-		// only if the first letter is what we want
-		temp := strings.Fields(scan.Text())
-		fmt.Println(temp)
+	scan := bufio.NewScanner(file)
+	for scan.Scan(){ // we read in the string line by line  // could scan through and instead just use the ones that we found 
+		temp := scan.Text() // this gives us each line
+		fmt.Println(currentWebsite.all_occurances)
+		/*
+		newstrings := currentWebsite.all_occurances
+		fmt.Println(len(newstrings))
+		for i:=0;i<len([]newstrings);i++{
+			temp = strings.Replace(temp,newstrings[i],newWebsite.original,-1)
+		}
+		*/
+		temp+=string("\n")
+		// now we add old into new
+		if _, err := f.Write([]byte(temp)); err != nil {
+			log.Fatal(err)
+		}
 	}
+		// essentially renames the file rename(old, new)
+		//use os.Getwd to get the rooted path
 }
 

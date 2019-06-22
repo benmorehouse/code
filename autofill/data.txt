@@ -7,7 +7,6 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-
 	"github.com/PuerkitoBio/goquery"
 	"github.com/gobuffalo/pop"
 	"github.com/machinebox/sdk-go/fakebox"
@@ -213,9 +212,7 @@ func (b *Buzzfeed) Run() error {
 		entries = append(entries, entry)
 
 	}
-
 	b.log.Println("finished scraping articles")
-
 	for _, e := range entries {
 		sEntry := scraper.SearchEntry{}
 		sEntry.ID = e.ID.String()
@@ -235,9 +232,7 @@ func (b *Buzzfeed) Run() error {
 	}
 
 	b.log.Println("articles indexed for search")
-
 	return nil
-
 }
 
 type link struct {
@@ -247,4 +242,3 @@ type link struct {
 	image       string
 	description string
 }
-
