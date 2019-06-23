@@ -13,7 +13,8 @@ import (
 /* now what you can do with this is have this individual cobra commands use other cobra commands
 */
 
-var rootCmd = &cobra.Command{
+var rootCmd = &cobra.Command{ // this is a global variable dont do this! Put it in main instead
+	// or do a function that returns the cobra command 
 	Use: "root",
 	Long: "If you wanna use this test command, then enter in some sort of command that you see",
 	Short: "test is just gonna output test the command it prompts you with",
@@ -24,7 +25,6 @@ var rootCmd = &cobra.Command{
 }
 
 func main(){
-	fmt.Println("Test:")
 	rootCmd.AddCommand(listCmd)
 	rootCmd.AddCommand(createListCmd)
 	rootCmd.Execute()

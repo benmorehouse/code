@@ -1,0 +1,22 @@
+Wednesday meeting ideas
+
+1. What if I built some sort of application for those who are just like me? They are trying to think of stuff to build but they are struggling to figure out what exactly they should build. 
+Point them in a few directions and give them ways to generate ideas. 
+ 	- can do this buy letting them answer a long questionnaire about what they are interested in within tech
+      - one fat ass binary tree 
+        
+2. What if I built something that logged everything that I did from the start of the day to the end of the day based on the location and everytime that I changed my location it would prompt me to type in what I am doing or what not
+3. I also want to build something that will let me write my own yml files 
+4. Go through the PowerPoints you were given for web development 
+5. Try to put list just in the same directory and see what happens
+6. Make a portal for your own personal projects 
+     Prompt people on how they met you 
+     Point them to your github and your LinkedIn
+7. Make something that you can install on your computer or smart phone that will let you 
+8. Make default website for Mariana
+9. Build mock website for phone repair website
+10. Build something that will automatically fill in the names of the website when you do the web scraping
+11. Build an iMessage, gmail and slack client for your terminal
+12. What if you build a service that would specifically manage how people go about their house based off the temperature in which they move? Would be paired with amazon Alexa
+13. Also make an alias that will automatically do all of your GitHub commands for you 
+14. Do a web scraper that reads a website and scans for tickets constantly 
