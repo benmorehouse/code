@@ -7,7 +7,6 @@ Point them in a few directions and give them ways to generate ideas.
         
 2. What if I built something that logged everything that I did from the start of the day to the end of the day based on the location and everytime that I changed my location it would prompt me to type in what I am doing or what not
 3. I also want to build something that will let me write my own yml files 
-4. Go through the PowerPoints you were given for web development 
 5. Try to put list just in the same directory and see what happens
 6. Make a portal for your own personal projects 
      Prompt people on how they met you 
@@ -20,3 +19,11 @@ Point them in a few directions and give them ways to generate ideas.
 12. What if you build a service that would specifically manage how people go about their house based off the temperature in which they move? Would be paired with amazon Alexa
 13. Also make an alias that will automatically do all of your GitHub commands for you 
 14. Do a web scraper that reads a website and scans for tickets constantly 
+
+
+
+
+///////
+
+
+

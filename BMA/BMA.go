@@ -14,26 +14,21 @@ func main(){
 	fmt.Println("/***********************************************************************/\n")
 	fmt.Println("This is a tool that will be used to parse through files and change the \nnames of the file that we are working on to a new file which will be a new scraper/etc.\n")
 	fmt.Println("/***********************************************************************/\n")
-
-	fmt.Print("Enter in your website (EX: buzzfeed) : ")
-	var input string
-	fmt.Scan(&input)
-	err := httpCheck(input)
-
-	if err != nil{
-		fmt.Println("Error: Not a valid website")
-		os.Exit(1)
-	}
-
+	input := "buzzfeed"
 	currentWebsite := website{
 		original: input,
 		upper: strings.ToUpper(input),
 		lower: strings.ToLower(input),
 	}
 
-	fmt.Print("Now enter in the new website scraper : ")
+	fmt.Print("Enter in the new website scraper : ")
 	fmt.Scan(&input)
-	err = httpCheck(input)
+	err := httpCheck(input)
+
+	if err !=nil{
+		fmt.Println("err:",err)
+		os.Exit(1)
+	}
 
 	f, err := os.Create(input + ".txt") // this is the file writer
 
@@ -46,7 +41,7 @@ func main(){
 		original: input,
 	}
 
-	fptr := flag.String("filepath",currentWebsite.original + ".txt","") // the file pointer needed to do os.Open()
+	fptr := flag.String("filepath","template.txt","") // the file pointer needed to do os.Open()
 	flag.Parse()
 	file, err := os.Open(*fptr) // file is the returned value of os.open. It is what we read through 
 	if err != nil{
@@ -69,6 +64,7 @@ func main(){
 	}
 		// essentially renames the file rename(old, new)
 		//use os.Getwd to get the rooted path
-		txtToGo(newWebsite.original)
+	txtToGo(newWebsite.original)
+	// at this point we need to run the file moving because now we have a file to work with 
+	moveFile(newWebsite.original)
 }
-

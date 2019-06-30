@@ -12,8 +12,6 @@ type website struct{
 	lower string
 }
 
-// gotta rebuild what we did last time but this have it return any strings that are found that resemble the user input 
-
 func (temp website) all_occurances(input string) []string{
 	var return_statement []string
 	for i:=0;i<len(input);i++{
@@ -25,14 +23,14 @@ func (temp website) all_occurances(input string) []string{
 					matched = false
 					break
 				}else{
-					appendedString+=string(input[j])// this is good 
+					appendedString += string(input[j])// this is good 
 				}
 			}
 			if matched == true{
 				//gotta make sure appended string is not repeated
-				is_matched :=false
+				is_matched := false
 				for i:=0;i<len(return_statement);i++{
-					if return_statement[i]==appendedString{
+					if return_statement[i] == appendedString{
 						is_matched = true
 					}
 				}

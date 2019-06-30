@@ -18,7 +18,7 @@ https://github.com/boltdb/bolt
 var mycommands struct{
 	list() // this is gonna list all of the stuff out how i want it to be shown?
 	create() // this will create
-	remove() // this will remove
+	remove() // this will remove a command
 }
 
 
