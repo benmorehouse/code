@@ -1,10 +1,11 @@
 ---
 default:
-        cmd: | #!/usr/bin/env bash
+        cmd: | #/usr/bin/env bash
 
 
                 clear
+
                 cd ~/code/std
 
-                go build  commands.go functions.go listStructure.go main.go .
-                /tmp/std
+                go build .
+                ./std Read

@@ -13,19 +13,13 @@ import (
 
 var rootCmd = &cobra.Command{ // this is a global variable dont do this! Put it in main instead
 	// or do a function that returns the cobra command 
-	Use: "todo",
-	Long: "todo is gonna be something you use everyday",
-	Short: "Task Manager ",
+	Use: "", // will run everytime you type nothing in 
+	Short: "Task Manager",
 	Example: "An example would be that you enter in test[Enter] and then the command that you want to test",
-	Run: func(cmd *cobra.Command, args []string) {
-		// when ever you run STD this always runs. Maybe you can get this to show you all of the lists
-	},
 }
-
 
 func main(){
-	rootCmd.AddCommand(readList)
 	rootCmd.AddCommand(writeList)
+	rootCmd.AddCommand(readList)
 	rootCmd.Execute()
 }
-
