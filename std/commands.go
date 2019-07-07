@@ -7,10 +7,8 @@ import (
 	"log"
 )
 
-var testSlice = []byte("Hello world\nthis is a testSlice")
-var key = []byte("Output")
-var BucketName = []byte("Work")
-
+var bucketName = []byte("Lists")
+// This needs to be fixed 
 var readList = &cobra.Command{ // just displays the list 
 	Use: "Read",
 	Short:"Reads what is on the current list",
@@ -21,7 +19,7 @@ var readList = &cobra.Command{ // just displays the list
 		}
 		defer db.Close()
 		err = db.View(func(tx *bolt.Tx) error {
-			bucket := tx.Bucket(BucketName) // here what we will do is read in whats in temp and change to byte
+			bucket := tx.Bucket(bucketName) // here what we will do is read in whats in temp and change to byte
 			if bucket == nil { // this will be nil if there is nothing at all in the bucket!
 				fmt.Println("Empty")
 			}
@@ -42,31 +40,33 @@ var writeList = &cobra.Command{ // appends to the end of the bucket
 	// Args: this is how you can add in arguments into your cobra commands. You should be able to pass in
 	Run: func(cmd *cobra.Command, args []string){ // args is gonna be what we pass through 
 		// open tmp, let user input, then read line for line and add into bucket
-		var chosenBucket string
-		if bucketExists(strToByteSlice(args[0])) == false && args[0] == "new"{ // if user argument is not a bucket
-			fmt.Println("Enter in a list to work with or for new list, enter new")
-			fmt.Scan(&chosenBucket)
-			for bucketExists(strToByteSlice(chosenBucket)){
-				fmt.Println("Enter in a list to work with or for new list, enter new")
-				fmt.Scan(&chosenBucket)
-			}
-		}
-
 		db, err := bolt.Open("mainDatabase.db", 0600, nil)
-		fmt.Println(args)
-
+		var temp string
+		if len(args) < 1{
+			fmt.Println("Which list?")
+			fmt.Scan(&temp)
+		}
+		desKey := strToByteSlice(temp)
 		if err != nil {
 			log.Fatal(err)
 		}
 		defer db.Close() // will close at end of function run
 		err = db.Update(func(tx *bolt.Tx) error{
-			bucket, err := tx.CreateBucketIfNotExists(strToByteSlice(chosenBucket)) // tx is used to create and interact with buckets
+			bucket, err := tx.CreateBucketIfNotExists(bucketName) // tx is used to create and interact with buckets
 			if err != nil {
 				log.Println("blank bucket name or too long of a name")
 			}
-			err = bucket.Put(strToByteSlice("second"),getInput()) // getinput opens the file
-			if err != nil{
-				return err
+			checkKey := bucket.Get(desKey)
+			for checkKey == nil{
+				fmt.Println("Not a valid list, please enter in an existing key")
+				var temp string
+				fmt.Scan(&temp)
+				checkKey = bucket.Get(strToByteSlice(temp))
+			} // at this point now we know that checkKey exists
+			desKey = checkKey
+			err = bucket.Put(desKey,getInput()) // getinput opens the file
+			for err != nil{
+				log.Println("error in write command",err)
 			}
 			return nil
 		})
@@ -74,5 +74,43 @@ var writeList = &cobra.Command{ // appends to the end of the bucket
 			log.Fatal("error in write command:",err) // this will 
 		}
 	},
+}
+
+var createList = &cobra.Command{
+	Use: "Create",
+	Short: "create a list",
+	Example: "./std create work",
+	Run: func(cmd *cobra.Command, args []string){ // args is gonna be what we pass through 
+		db, err := bolt.Open("mainDatabase.db", 0600, nil)
+		desKey := strToByteSlice(args[0])
+		if err != nil{
+			log.Println("Error at createlist command:",err)
+		}
+		defer db.Close()
+	newKey := strToByteSlice(args[0])
+	err = db.Update(func(tx *bolt.Tx) error{
+		bucket, err := tx.CreateBucketIfNotExists(bucketName) // tx is used to create and interact with buckets
+		if err != nil {
+			log.Println("blank bucket name or too long of a name")
+		}
+		checkKey := bucket.Get(desKey)
+		for checkKey != nil{
+			fmt.Println("list already exists")
+			var temp string
+			fmt.Scan(&temp)
+			checkKey = bucket.Get(strToByteSlice(temp))
+		} // at this point now we know that checkKey exists
+		newKey = checkKey
+		err = bucket.Put(desKey,getInput()) // getinput opens the file
+		for err != nil{
+			log.Println("error in write command",err)
+		}
+		return nil
+	})
+		if err != nil {
+			log.Fatal("error in write command:",err) // this will 
+		}
+	},
+
 }
 

@@ -4,10 +4,6 @@ import(
 	"fmt"
 	"os"
 	"os/exec"
-	"log"
-	"bufio"
-
-	"github.com/boltdb/bolt"
 )
 /*
 type list struct{
@@ -47,73 +43,4 @@ func getInput()([]byte){
 
 }
 
-func bucketExists(input []byte)(bool){
-	// is going to go through bucket text file, and given user input, will tell if it exists
-	file , err := os.Open("bucketLust.txt")
-	if err != nil{
-		log.Fatal("Error with opening bucketLust.txt...",err)
-	}
-	defer file.Close() // closes file when function is ready to end (excluding os.Exit(1))
 
-	scanner := bufio.NewScanner(file)
-	for scanner.Scan() {
-		if scanner.Text() == string(input){
-			return true // this bucket exists
-		}
-	}
-	return false // this bucket was never found
-}
-
-func showKeys(){
-	file , err := os.Open("bucketLust.txt")
-	if err != nil{
-		log.Fatal("Error with opening bucketLust.txt...",err)
-	}
-	scanner := bufio.NewScanner(file)
-	fmt.Println("Available lists\n_________________________________________")
-	for scanner.Scan(){
-		fmt.Println(scanner.Text())
-	}
-}
-
-func deleteKey(input []byte,curBucket *Bucket)error{
-	db, err := bolt.Open("mainDatabase.db", 0600, nil)
-	defer db.Close()
-	if err!=nil{
-		log.Println("deleteKey open database failed with error message:",err)
-	}
-	err = .Delete(input)
-	if err == nil{ // this means that if the input was not in the db, then it returned something
-		Println("error: list doesnt exist")
-		return err
-	}
-	file , err := os.Open("bucketLust.txt")
-	if err != nil{
-		log.Fatal("Error with opening bucketLust.txt...",err)
-	}
-	scanner := bufio.NewScanner(file)
-	var lists []string
-	for scanner.Scan(){
-		if scanner.Text() != "delete"{
-			lists = append(lists,scanner.Text())
-		}
-	}
-	file , err = os.Create("bucketLust.txt")
-	if err != nil{
-		log.Println("This file already exists")
-	}
-	for _, place := range lists{
-		fmt.Fprintln(file,place) // will write in the lists now but without the one that we wanted 
-	}
-
-	err = file.Close()
-
-}
-
-func addKey(input []byte)error{
-	db , err := bolt.Open("mainDatabase.db",0600,nil)
-	defer db.Close()
-	if err!=nil{
-		log.Println("deleteKey open database failed with error message:",err)
-	}
-}

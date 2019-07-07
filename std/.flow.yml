@@ -8,3 +8,4 @@ default:
                 cd ~/code/std
 
                 go build .
+                ./std Write work
