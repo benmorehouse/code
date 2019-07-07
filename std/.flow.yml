@@ -8,4 +8,3 @@ default:
                 cd ~/code/std
 
                 go build .
-                ./std Read

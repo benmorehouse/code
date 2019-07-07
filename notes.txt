@@ -19,9 +19,7 @@ Point them in a few directions and give them ways to generate ideas.
 12. What if you build a service that would specifically manage how people go about their house based off the temperature in which they move? Would be paired with amazon Alexa
 13. Also make an alias that will automatically do all of your GitHub commands for you 
 14. Do a web scraper that reads a website and scans for tickets constantly 
-
-
-
+15. Make your own library of commands that you use like get input and then make it easy to import from github
 
 ///////
 
