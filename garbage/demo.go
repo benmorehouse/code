@@ -1,19 +1,14 @@
 package main
 
 import (
-	"os/exec"
 	"os"
-	"fmt"
+	"os/exec"
 )
 
 func main(){
-	/*cmd := exec.Command("vim")
+	cmd := exec.Command("vim","-o","temp.txt")
 	cmd.Stdout = os.Stdout
 	cmd.Stdin = os.Stdin
 	cmd.Stderr = os.Stderr
 	cmd.Run()
-	*/
-	cmd:=exec.Command("vim")
-	fmt.Println(cmd.Dir)
-
 }

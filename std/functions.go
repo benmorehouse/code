@@ -43,4 +43,11 @@ func getInput()([]byte){
 
 }
 
-
+func openFile(){
+	cmd := exec.Command("vim","-o","buffer.txt")
+	// the hope is that buffer.txt will have everything loaded in from the bucket
+	cmd.Stdout = os.Stdout
+	cmd.Stdin = os.Stdin
+	cmd.Stderr = os.Stderr
+	cmd.Run()
+}

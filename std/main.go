@@ -21,6 +21,6 @@ var rootCmd = &cobra.Command{ // this is a global variable dont do this! Put it 
 func main(){
 	rootCmd.AddCommand(createList)
 	rootCmd.AddCommand(writeList)
-	rootCmd.AddCommand(readList)
+	//rootCmd.AddCommand(deleteList)  // this will eventually be put into play 
 	rootCmd.Execute()
 }
