@@ -7,6 +7,7 @@ import (
 	"log"
 	"os"
 	"io/ioutil"
+	"time"
 )
 
 var bucketName = []byte("Lists")
@@ -20,6 +21,7 @@ var writeList = &cobra.Command{ // appends to the end of the bucket
 	Run: func(cmd *cobra.Command, args []string){ // args is gonna be what we pass through 
 		// open tmp, let user input, then read line for line and add into bucket
 		db, err := bolt.Open("mainDatabase.db", 0600, nil)
+		fmt.Println("length of args",len(args))
 		var temp string
 		if len(args) < 1{
 			fmt.Println("Which list?")
@@ -36,6 +38,8 @@ var writeList = &cobra.Command{ // appends to the end of the bucket
 				log.Println("blank bucket name or too long of a name")
 			}
 			checkKey := bucket.Get(desKey)
+			fmt.Println("CheckKey:",string(checkKey))
+			time.Sleep(5 * time.Second)
 			if checkKey == nil{
 				for checkKey==nil{
 					fmt.Println("Not a valid list, please enter in an existing key")
