@@ -10,7 +10,7 @@ import (
 /* now what you can do with this is have this individual cobra commands use other cobra commands
 */
 
-
+// do not make global package variables - bad practice and can lead to bugs
 var rootCmd = &cobra.Command{ // this is a global variable dont do this! Put it in main instead
 	// or do a function that returns the cobra command 
 	Use: "", // will run everytime you type nothing in 
@@ -22,5 +22,7 @@ func main(){
 	rootCmd.AddCommand(createList)
 	rootCmd.AddCommand(writeList)
 	//rootCmd.AddCommand(deleteList)  // this will eventually be put into play 
+
 	rootCmd.Execute()
+// you need to add in err handling here 
 }

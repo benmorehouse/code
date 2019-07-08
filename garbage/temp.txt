@@ -1,0 +1,21 @@
+	// everything will be tier 1 because it all registers the exact same way on the website 
+	doc.Find("div.fc-item__container").Each(func(i int, sel *goquery.Selection) {
+		t1link , _ := sel.Find("fc-item__header fc-item__title").Attr("href")
+		t1link = baseURL + t1link
+		t1image , image_err := sel.Find("div.fc-item__media-wrapper div.fc-item__image-container").Attr("srcset")
+		// title and title2 are added to make the final title 
+		t1title := sel.Find("div.fc-item__content div.fc-item__header div.fc-item__title div.fc-item__kicker").Text()
+		t1title2 := sel.Find("div.fc-item__content div.fc-item__header div.fc-item__title div.u-faux-block-link__cta div.js-headline-text").Text()
+		t1title += " "
+		t1title += t1title2
+		b.log.Print("t1image: ", t1image)
+		b.log.Print("t1title: ", t1title)
+		b.log.Print("t1url: ", t1link)
+		if image_err == true{ // if t1image was actually made
+			links = append(links, link{title: t1title, url: t1link, image: t1image, tier: 1})
+		}else{
+			links = append(links, link{title: t1title, url: t1link,tier: 1})
+		}
+	})
+
+div.content__article-body"
