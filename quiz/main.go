@@ -7,6 +7,7 @@ import(
 	"log"
 	"os"
 	"encoding/csv"
+	"time"
 )
 
 func main(){
@@ -53,4 +54,9 @@ type problem_set struct{
 	question string
 	answer string
 }
+
+func timer(input int)chan int{
+	time.Sleep(input * time.Seconds()
+}
+
 

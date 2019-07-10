@@ -20,3 +20,13 @@ alias gp='git push'
 
 export MB_KEY=ODJkYzk4ZDlmZjU0NmIyZDUwYWIzMjBlMTViMzFjYmU.gSsWxLeQKCc7FeAICM9WCW3KcGWWrb5dwlUU17unIQR15TIYbI6No63mzYdkbQsWKCEcglTd8uh7UlESxiFDNw
 
+
+# Setting PATH for Python 3.7
+# The original version is saved in .bash_profile.pysave
+PATH="/Library/Frameworks/Python.framework/Versions/3.7/bin:${PATH}"
+export PATH
+
+# Setting PATH for Python 3.7
+# The original version is saved in .bash_profile.pysave
+PATH="/Library/Frameworks/Python.framework/Versions/3.7/bin:${PATH}"
+export PATH
