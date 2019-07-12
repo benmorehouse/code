@@ -17,6 +17,7 @@ alias ol="cd ~/programs/work; vim"
 alias gs='git status --short'
 alias gc='git commit --all'
 alias gp='git push'
+alias cr='~/code/htmlProject/chromerefresh.sh'
 
 export MB_KEY=ODJkYzk4ZDlmZjU0NmIyZDUwYWIzMjBlMTViMzFjYmU.gSsWxLeQKCc7FeAICM9WCW3KcGWWrb5dwlUU17unIQR15TIYbI6No63mzYdkbQsWKCEcglTd8uh7UlESxiFDNw
 

@@ -20,7 +20,7 @@ Point them in a few directions and give them ways to generate ideas.
 13. Also make an alias that will automatically do all of your GitHub commands for you 
 14. Do a web scraper that reads a website and scans for tickets constantly 
 15. Make your own library of commands that you use like get input and then make it easy to import from github
-
+16. Make a mentor program where you pair young coders with older coders 
 ///////
 
 

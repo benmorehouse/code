@@ -86,17 +86,25 @@ func (b *thedartmouth) Run() error {
 	// tier 1
 	t1selector := doc.Find("article.art-above")
 	t1link , _ := t1selector.Find("div.art-above-img-div").Attr("href")
-	t1image , err := t1selector.Find("div.art-above-img-div").Attr("src") // this doesnt seem right !
+	t1image , _ := t1selector.Find("div.art-above-img-div").Attr("src") // this doesnt seem right !
 	t1title := t1selector.Find("h6.art-above-headline").Text()
 	t1description := t1selector.Find("p.article-abstract").Text()
-	links = append(links, link{title: t1title, url: t1url, tier 1, image: t1image, description: t1description})
+	b.log.Println("t1title:",t1title)
+	b.log.Println("t1link:",t1link)
+	b.log.Println("t1image",t1image)
+	b.log.Println("t1description",t1description)
+
+	links = append(links, link{title: t1title, url: t1url, tier: 1, image: t1image, description: t1description})
 
 	//tier 2     Everything is listed the same way after the initial article
 
 	doc.Find("div.row div.col-md-6").Each(func(i int, sel *goquery.Selection) {
-		url := sel.Find("article.art-above hed-above-headline").Attr("href")
+		url , _ := sel.Find("article.art-above hed-above-headline").Attr("href")
 		title := sel.Find("article.art-above hed-above-headline").Text()
 		description := sel.Find("p.article-abstract").Text()
+		b.log.Println("title:",title)
+		b.log.Println("link:",url)
+		b.log.Println("image",image)
 		links = append(links, link{title: title, url: u, tier: 2, description: description})
 	})
 
