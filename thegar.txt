@@ -1,0 +1,25 @@
+
+	doc.Find("div.fc-item__container").Each(func(i int, sel *goquery.Selection) {
+		url , _ := sel.Find("a").Attr("href")
+		title := sel.Find("a").Text()
+		image , imageErr := sel.Find("div.fc-item__image-container picture source").Attr("srcset")
+		if imageErr == false{ // this means that there was no image that was grabbed 
+			links = append(links, link{title: title, url: url, tier: 1})
+			b.log.Println("Title:",title)
+			b.log.Println("url:",url)
+		}else{
+			links = append(links, link{title: title, url: url, image: image, tier: 1})
+			b.log.Println("Title:",title)
+			b.log.Println("url:",url)
+			b.log.Println("image:",image)
+		}
+	})
+
+
+
+
+doc.Find("div.content__main p").Each(func(i int, sel *goquery.Selection) {
+			content = append(content, sel.Text())
+		})
+
+

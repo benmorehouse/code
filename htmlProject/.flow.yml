@@ -1,0 +1,9 @@
+---
+default:
+        cmd: | #!/usr/bin/env bash
+
+
+                clear
+                cd ~/code/htmlProject
+
+                open -a "Google Chrome"
