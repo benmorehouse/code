@@ -73,12 +73,12 @@ func (b *Buzzfeed) Run() error {
 
 	res, err := b.httpClient.Get(baseURL)
 	if err != nil {
-		errors.Wrap(err, "error fetching Buzzfeed homepage")
+		return errors.Wrap(err, "error fetching Buzzfeed homepage")
 	}
 
 	doc, err := goquery.NewDocumentFromReader(res.Body)
 	if err != nil {
-		errors.Wrap(err, "parsing Buzzfeed homepage")
+		return errors.Wrap(err, "parsing Buzzfeed homepage")
 	}
 
 	links := []link{}

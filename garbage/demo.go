@@ -1,14 +1,29 @@
 package main
 
 import (
+	"bufio"
 	"os"
-	"os/exec"
+	"fmt"
 )
 
 func main(){
-	cmd := exec.Command("vim","-o","temp.txt")
-	cmd.Stdout = os.Stdout
-	cmd.Stdin = os.Stdin
-	cmd.Stderr = os.Stderr
-	cmd.Run()
+	file , err := os.Open("temp.txt")
+	if err != nil{
+		return
+	}
+	scan := bufio.NewScanner(file)
+	scan.Scan()
+	RW := bufio.NewReadWriter(bufio.NewReader(file),bufio.NewWriter(file))
+	num , err := RW.Reader.Read([]byte(scan.Text()))
+	fmt.Println(num)
+
+	scan.Scan()
+	num , err = RW.Reader.Read([]byte(scan.Text()))
+	fmt.Println(num)
+	if num == 0{
+		_ , err = RW.Writer.Write([]byte("/*")) // need to figure out how to get this to write to the file
+	}
+
 }
+
+
