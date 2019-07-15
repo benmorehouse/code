@@ -23,7 +23,7 @@ func main(){
 		log.Fatal("ERROR: NO SCRAPER ENTERED")
 	}
 
-	file, err := os.Open(*fptr) // file is the returned value of os.open. It is what we read through 
+	file, err := os.Open(*fptr) // file is the returned value of os.open. It is what we read through  // all this stuff could be in boltdb
 	if err != nil{
 		fmt.Println("error: cron conditions not able to be opened")
 	}
@@ -37,7 +37,7 @@ func main(){
 	scan.Scan()
 	scheduler.condition_name = scan.Text()
 
-	if scheduler.condition != 0 || scheduler.condition_name != "INITIAL_CONDITION"{
+	if scheduler.condition != 0 || scheduler.condition_name != "INITIAL_CONDITION"{ // this will eventually get removed
 		reset_cron()
 		log.Fatal(scheduler.filename," is not in an initial state. Restart program")
 	}
@@ -46,9 +46,8 @@ func main(){
 	*new_scraper = strings.TrimSpace(*new_scraper)
 	scheduler.condition_name = *new_scraper
 	fmt.Println("new_scraper:", *new_scraper)
-
-	file ,err = os.Open("cron.txt")
-	scan = bufio.NewScanner(file)
+	// now we are gonna go through and edit 
+	// make a flag for the option to reset cron
 
 
 }

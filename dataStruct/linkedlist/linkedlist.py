@@ -1,3 +1,6 @@
+# This is an implementation of a basic linked list
+# This is more for me to get comfy with Python and less for the development of a linked list
+
 class node(object): # this is how you create a class in python
     def __init__(Node, data): # this is somewhat like a constructor for python 
         # we are constructing self here. We make a variable self.data which will be data and then self.next
@@ -8,7 +11,7 @@ class Linkedlist():
     
     def __init__(List): # constructing a list called self
         List.head = None
-        List.size = 0 
+        List.current_size = 0 
     
     def isEmpty(List):
         if not List.head:
@@ -20,7 +23,7 @@ class Linkedlist():
 
     def insertStart(List, data):
         newNode = node(data)
-        List.size = List.size + 1
+        List.current_size += 1
 
         if not List.head: # meaning if self.head is null then ....
             List.head = newNode
@@ -28,32 +31,19 @@ class Linkedlist():
         else:
             newNode.Next = List.head
             List.head = newNode
-            List.size += 1
+            List.current_size += 1
     
-    def size(List):
-        return List.size
-
-    def findEnd(List):
-        Node = List.head
-
-        if not Node:
-            return
-        
-        else:
-            while Node.Next != None:
-                Node = Node.Next
-        
-        return Node
-
     def insertEnd(List, data):
         newNode = node(data)
-        endNode = List.findEnd
-       
-        if not endNode:
-            return 
+        if List.isEmpty == True:
+            return
         else:
-            endNode.Next = newNode
-            List.size += 1
+            current_node = List.head
+            while current_node.Next != None:
+                current_node = current_node.Next
+
+            current_node.Next = newNode
+            List.current_size += 1
 
     def traverse(List): # This works
         if List.isEmpty == True:
@@ -85,10 +75,16 @@ class Linkedlist():
                 List.size -= 1
             
             List.head = curNode.Next
-                   
+     
+    def get_size(List):
+        return List.current_size
+
+              
 
 
 workList = Linkedlist()
-workList.insertStart("hello world")
-workList.insertEnd("This is my program")
+workList.insertStart("This is something that i have made")
+workList.insertEnd("hello world")
 workList.traverse()
+print(workList.get_size()) #cant do current size you always have to have something return the size in python
+

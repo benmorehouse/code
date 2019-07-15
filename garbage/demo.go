@@ -1,4 +1,4 @@
-package main
+/*package main
 
 import (
 	"bufio"
@@ -26,4 +26,25 @@ func main(){
 
 }
 
+*/
 
+package main
+
+import(
+	"fmt"
+	"time"
+)
+
+func main(){
+	var a chan int
+	go func(){
+		time.Sleep(3 * time.Second)
+		a<-0
+	}()
+	fmt.Println("Waiting...")
+	select{
+		case <-a:
+		fmt.Println("You just waited two seconds")
+	}
+
+}
