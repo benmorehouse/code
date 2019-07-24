@@ -4,20 +4,10 @@ import(
 	"fmt"
 	"os"
 	"os/exec"
+	"log"
+	"github.com/boltdb/bolt"
+	"strings"
 )
-/*
-type list struct{
-	// Use the get function with this to be able to go in and get the data 
-	key []byte
-	content []byte
-}*/
-func showLists(lists []list){ // an array of lists 
-	// shows all of the lists that we have thus far
-	fmt.Println("Available Lists\n____________________________________")
-	for i:=0;i<len(lists);i++{
-		fmt.Println(string(lists[i].key))
-	}
-}
 
 func doThis(command string){
 	cmd := exec.Command(command)
@@ -40,14 +30,46 @@ func getInput()([]byte){
 	// for now just gonna test with simple buffered scanner - will move to command line temp file afterwards
 	var input string = "test string"
 	return strToByteSlice(input)
-
 }
 
 func openFile(){
-	cmd := exec.Command("vim","-o","buffer.txt")
+	cmd := exec.Command("vim","-o","buffer.md")
 	// the hope is that buffer.txt will have everything loaded in from the bucket
 	cmd.Stdout = os.Stdout
 	cmd.Stdin = os.Stdin
 	cmd.Stderr = os.Stderr
 	cmd.Run()
 }
+
+func show_lists(db *bolt.DB) error { // this will show the list of all the lists that are in that bucket
+	if db == nil { // this means if DB is nil
+		log.Fatal("show_lists was given a null database")
+	}
+
+	err := db.Update(func(tx *bolt.Tx) error{
+		bucket := tx.Bucket(bucketName)
+		if bucket == nil{
+			log.Fatal("show_lists couldnt open the bucket")
+		}
+
+		get_list := bucket.Get([]byte("show_lists"))
+
+		if get_list == nil{
+			fmt.Println("No lists yet")
+			return nil
+		}
+		temp_list := string(get_list)
+
+		final_list := strings.Fields(temp_list)
+
+		fmt.Println("\tAVAILABLE LISTS\n______________________________\n")
+		for _ , val := range final_list{
+			fmt.Print("- ")
+			fmt.Println(val)
+		}
+		fmt.Println("______________________________\n")
+		return nil
+	})
+	return err
+}
+

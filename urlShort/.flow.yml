@@ -1,0 +1,10 @@
+--- # Automation build for urlShort
+default:
+        cmd: | #/usr/bin/env bash
+
+                clear
+
+                cd ~/code/urlShort
+
+                go build  -o /tmp/urlShort .
+                /tmp/urlShort

@@ -19,7 +19,7 @@ import (
 
 var baseURL = "https://www.buzzfeed.com/"
 
-// Buzzfeed News holds all the informaition needed to Buzzfeed News scraper
+// Buzzfeed holds all the informaition needed to Buzzfeed News scraper
 type Buzzfeed struct {
 	log        *log.Logger
 	httpClient *http.Client

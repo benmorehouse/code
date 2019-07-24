@@ -7,7 +7,6 @@ import (
 	"log"
 	"os"
 	"io/ioutil"
-	"time"
 )
 
 var bucketName = []byte("Lists")
@@ -21,63 +20,63 @@ var writeList = &cobra.Command{ // appends to the end of the bucket
 	Run: func(cmd *cobra.Command, args []string){ // args is gonna be what we pass through 
 		// open tmp, let user input, then read line for line and add into bucket
 		db, err := bolt.Open("mainDatabase.db", 0600, nil)
-		fmt.Println("length of args",len(args))
-		var temp string
-		if len(args) < 1{
-			fmt.Println("Which list?")
-			fmt.Scan(&temp)
-		}
-		desKey := strToByteSlice(temp)
 		if err != nil {
 			log.Fatal(err)
 		}
 		defer db.Close() // will close at end of function run
+
+		var temp string
+		if len(args) != 1{
+			show_lists(db)
+			fmt.Scan(&temp)
+		}else{
+			temp = args[0]
+		}
+		chosen_list_key := []byte(temp)
+
 		err = db.Update(func(tx *bolt.Tx) error{
-			bucket, err := tx.CreateBucketIfNotExists(bucketName) // tx is used to create and interact with buckets
-			if err != nil {
-				log.Println("blank bucket name or too long of a name")
+			bucket := tx.Bucket(bucketName)
+			if bucket == nil {
+				log.Fatal("Not able to open the bucket with all the lists:")
 			}
-			checkKey := bucket.Get(desKey)
-			fmt.Println("CheckKey:",string(checkKey))
-			time.Sleep(5 * time.Second)
-			if checkKey == nil{
-				for checkKey==nil{
-					fmt.Println("Not a valid list, please enter in an existing key")
-					var temp string
-					fmt.Scan(&temp)
-					checkKey = bucket.Get(strToByteSlice(temp))
+
+			content := bucket.Get([]byte(chosen_list_key)) // this will return what is in the list
+			if content == nil{ // this means that chose_list_key is not a key within the lists bucket
+				for content == nil{
+					fmt.Println("Not a valid list, please enter in an existing list")
+					show_lists(db)
+					fmt.Scan(&chosen_list_key)
+					content = bucket.Get([]byte(chosen_list_key))
 				} // at this point now we know that checkKey exists
 			}
-			desKey = checkKey
 
 			// loop through the file and put it into one big ass string. Then push that string to the bucket
 			//first we need to write whats in the key to the file
 			// then we let the user manipulate
 			// then we .put it back in
-			content := bucket.Get(desKey) // now content is what we have 
-			file , err := os.Create("buffer.txt")
+			file , err := os.Create("buffer.md")
 			if err != nil{
-				log.Println("Error:",err)
+				log.Println("Error opening file in writelist:",err)
 			}
 			_ , err = file.Write(content)
 
 			if err != nil{
-				log.Println("Error writing file: ", err)
+				log.Println("Error writing file in writelist: ", err)
 			}
 
 			openFile() // this will open the file and let the user input 
 
-			content, err = ioutil.ReadFile("buffer.txt")
-			fmt.Println(string(content))
+			content, err = ioutil.ReadFile("buffer.md")
 
-			err = bucket.Put(desKey,content)
+			err = bucket.Put(chosen_list_key,content)
+
 			for err != nil{
-				log.Println("error in write command",err)
+				log.Println("error in write command on line 77",err)
 			}
 			return nil
 		})
 		if err != nil {
-			log.Fatal("error in write command:",err) // this will 
+			log.Fatal("error in write command on line 82:",err) // this will return if the database isnt open?
 		}
 	},
 }
@@ -88,33 +87,59 @@ var createList = &cobra.Command{
 	Example: "./std create work",
 	Run: func(cmd *cobra.Command, args []string){ // args is gonna be what we pass through 
 		db, err := bolt.Open("mainDatabase.db", 0600, nil)
-		desKey := strToByteSlice(args[0])
 		if err != nil{
-			log.Println("Error at createlist command:",err)
+			log.Println("Error opening database at createlist command:",err)
 		}
 		defer db.Close()
-	newKey := strToByteSlice(args[0])
-	err = db.Update(func(tx *bolt.Tx) error{
-		bucket, err := tx.CreateBucketIfNotExists(bucketName) // tx is used to create and interact with buckets
-		if err != nil {
-			log.Println("blank bucket name or too long of a name")
-		}
-		checkKey := bucket.Get(desKey)
-		for checkKey != nil{
-			fmt.Println("list already exists")
-			var temp string
+
+		var temp string
+		if len(args) != 1{ // this means that they didnt enter in any sort of list to add into the bucket
+			fmt.Println("What is your new list called")
 			fmt.Scan(&temp)
-			checkKey = bucket.Get(strToByteSlice(temp))
-		} // at this point now we know that checkKey exists
-		newKey = checkKey
-		err = bucket.Put(desKey,getInput()) // getinput opens the file
-		for err != nil{
-			log.Println("error in write command",err)
+		}else{
+			temp = args[0]
 		}
-		return nil
-	})
+
+		chosen_list_key := []byte(temp) // this is the new list name within the bucket lists
+
+		err = db.Update(func(tx *bolt.Tx) error{ // error happening here 
+			bucket , err := tx.CreateBucketIfNotExists(bucketName) // this is going into the database and accessing one bucket
+			if err != nil {
+				log.Println("blank bucket name or too long of a name")
+			}
+
+			checkKey := bucket.Get(chosen_list_key) //  if the list already exists then it will come up 
+			// this will return nil if this doesnt exist which is what we want 
+			for checkKey != nil{ // this means that they entered something that already exists
+				fmt.Println("list already exists:")
+				show_lists(db)
+				fmt.Scan(&temp)
+				checkKey = bucket.Get([]byte(temp))
+				chosen_list_key =[]byte(temp)
+			} // at this point now we know that checkKey exists
+
+			err = bucket.Put(chosen_list_key,[]byte(""))// creates the new bucket with nothing in it 
+
+			if err != nil{
+				log.Println("Unable to add new list in bucket in write command")
+				fmt.Println("chosen_list_key: ",chosen_list_key)
+				fmt.Println("value of newList:",bucket.Get(chosen_list_key))
+			}
+
+			show_list_temp := bucket.Get([]byte("show_lists"))
+
+			if show_list_temp == nil{
+				// this means that show_list has yet to be created within the database
+				bucket.Put([]byte("show_lists"),[]byte(chosen_list_key))
+			}else{
+				bucket.Put([]byte("show_lists"),[]byte(string(chosen_list_key) + string(show_list_temp)))
+			}
+
+			return nil
+		})
+
 		if err != nil {
-			log.Fatal("error in write command:",err) // this will 
+			log.Fatal("error in create command:",err) // this will 
 		}
 	},
 }

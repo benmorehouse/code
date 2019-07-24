@@ -16,38 +16,58 @@ func main(){
 	fmt.Println("This is a tool that will be used to automate the tedius cron changes")
 	fmt.Println("/***********************************************************************/\n")
 
-	fptr := flag.String("","cron_conditions.txt","") // the file pointer needed to do os.Open(). Leaving the name blank because will never have to edi
 	new_scraper := flag.String("ns", "", "user will input this to tell what the name of the new scraper is")
+	cron_flag := flag.String("cron","","user will input whether to comment or uncomment")
 	flag.Parse()
-	if *new_scraper == ""{
-		log.Fatal("ERROR: NO SCRAPER ENTERED")
+	if *new_scraper == "" && *cron_flag == ""{
+		log.Fatal("ERROR: NO SCRAPER OR CONDITION ENTERED")
 	}
 
-	file, err := os.Open(*fptr) // file is the returned value of os.open. It is what we read through  // all this stuff could be in boltdb
-	if err != nil{
-		fmt.Println("error: cron conditions not able to be opened")
-	}
-	// this is to check that cron_condition is starting out default
-	scan := bufio.NewScanner(file)
 	var scheduler cron
-	scan.Scan()
-	scheduler.filename = scan.Text()
-	scan.Scan()
-	scheduler.condition , _ = strconv.Atoi(scan.Text())
-	scan.Scan()
-	scheduler.condition_name = scan.Text()
+	db, err := bolt.Open("mainDatabase.db", 0600, nil)
+	defer db.Close()
+	db.Update(func(tx *bolt.Tx) error{
+		bucket_scan := db.Bucket([]byte("cron_conditions"))
+		if bucket_scan == nil{
+			fmt.Println("ERROR: CRON_CONDITIONS NOT SET IN DATABASE...RESETTING CRON")
+			err = reset_cron_conditions()
+			bucket_scan = db.Bucket([]byte("cron_conditions"))
+		}
 
-	if scheduler.condition != 0 || scheduler.condition_name != "INITIAL_CONDITION"{ // this will eventually get removed
-		reset_cron()
-		log.Fatal(scheduler.filename," is not in an initial state. Restart program")
+		cron_conditions := string(bucket_scan.Get([]byte("cron_conditions")))
+		cron_conditions = strings.Field(cron_conditions)
+		scheduler.filename = cron_conditions[0]
+		scheduler.condition = cron_conditions[1]
+		scheduler.condition_name = cron_conditions[2]
+
+		*new_scraper = strings.TrimSpace(*new_scraper)
+		*cron_flag = strings.ToLower(*cron_flag)
+
+		if scheduler.condition == 0{
+			// this means that it is in default/unedited mode and that the user is 
+			if *new_scraper == ""{
+				log.Println("ERROR: NO SCRAPER ENTER")
+			}else if *cron_flag
+				// there is a scraper
+				scheduler.condition = 1
+				scheduler.condition_name = *new_scraper
+				err = scheduler.Parse()// this will parse the cron file using the data that is within scheudler
+				if err != nil{
+					log.Println("ERROR: PARSE FUNCTION FAILED IN MAIN")
+				}
+			}
+		}else if scheduler.condition == 1{ // cron is already commented out and everything 
+			if *new_scraper != ""{
+				log.Println("ERROR: CRON IS COMMENTED. NEEDS TO BE UNCOMMENTED BEFORE NEW SCRAPER ENTERED"
+			}else if *cron_flag == "comment"{
+				log.Println("ERROR: CRON IS COMMENTED. PLEASE UNCOMMENT BEFORE CONTINUING")
+			}else{
+
+
+
+		// at this point we are ready to go and edit the file
+		// now we are gonna go through and edit 
+		// make a flag for the option to reset cron
+		// will have to use cron_condition based on what is going on
+
 	}
-	// at this point we are ready to go and edit the file
-
-	*new_scraper = strings.TrimSpace(*new_scraper)
-	scheduler.condition_name = *new_scraper
-	fmt.Println("new_scraper:", *new_scraper)
-	// now we are gonna go through and edit 
-	// make a flag for the option to reset cron
-
-
-}

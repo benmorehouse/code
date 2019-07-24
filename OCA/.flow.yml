@@ -5,7 +5,7 @@ default:
 
                 clear
 
-                cd ~/code/OSA
+                cd ~/code/OCA
 
-                go build  -o /tmp/OSA .
-                /tmp/OSA
+                go build  -o /tmp/OCA .
+                /tmp/OCA
