@@ -1,13 +1,11 @@
-#Work
+# Work
 
-	Go to the financial aid office and make sure that everything is good 
-	Dental work needs to be figured out 
-	look at the article on linkedin for top companies to work for
-	Look into General Assembly, ISI and CAIS++
-	Go to library online and email the person you were put in touch with for Doheny Library 
-	Make sure that the student health insurance is waived
-	Get ready to move out 
-	email erika
+	STD Issues to fix in ver 3.0:
+		sort the keys that you display in terms of alphabetical order
+		need to create the list rename function
+		need to create some sort of notepad section to list the available notes that you are working on
+		make something that will show all of the aliases that you have made for std
+		You could also come up with something that will let you send this note to someone via an imessage or email
 
 
-## When you are ready hit "MQ"
+# Press MQ when you are finished
