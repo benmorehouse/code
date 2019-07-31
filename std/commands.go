@@ -40,6 +40,7 @@ var writeList = &cobra.Command{ // appends to the end of the bucket
 			}
 
 			content := bucket.Get([]byte(chosen_list_key)) // this will return what is in the list
+
 			if content == nil{ // this means that chose_list_key is not a key within the lists bucket
 				for content == nil{
 					fmt.Println("Not a valid list, please enter in an existing list")
@@ -217,8 +218,7 @@ var deleteList = &cobra.Command{
 	},
 }
 
-/*
-var rename_list = &cobra.Command{
+var renamelist = &cobra.Command{
 	Use:"rename",
 	Short:"rename a list",
 	Example:"./std rename or ./std rename current_list new_list",
@@ -235,12 +235,10 @@ var rename_list = &cobra.Command{
 
 			if len(args) == 0{
 				fmt.Println("which list do you want renamed?")
-				fmt.Scan(&chosen_list_temp)
+				fmt.Scan(&chosen_list_temp) // need to edit this 
+				input_temp := bucket.Get(input_temp)
 
 			chosen_list_key := []byte(temp) // this is the new list name within the bucket lists
-
-
-
 
 			bucket := tx.bucket(bucketname)
 			if bucket == nil{
@@ -284,8 +282,40 @@ var rename_list = &cobra.Command{
 				log.Fatal("Couldnt push new_list in rename function")
 			}
 
-			// now
+			// now need to edit the show_lists key in the bucket
+
+			show_list_temp := bucket.Get([]byte("show_lists"))
+
+			if show_list_temp == nil{
+				log.Fatal("show_list broken at rename_list command")
+			}
+
+			temp_field := strings.Fields(string(show_list_temp))
+
+			for i , val := range temp_field{
+				if val == string(chosen_list_key){
+					temp_field[i] = new_list
+				}
+			}
+
+			err = bucket.Put([]byte("show_lists"),[]byte(strings.Join(temp_field," ")))
+
+			if err != nil{
+				log.Fatal("could not renter show_lists in delete command")
+			}
+
+			return nil
+		})
+
+		if err != nil{
+			log.Fatal("Error at the end of the rename function")
+		}
+	},
+}
 
 
-*/
+
+
+
+
 

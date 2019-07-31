@@ -68,7 +68,6 @@ class Linkedlist():
         if List.isEmpty == True:
             return "List is empty"
         else:
-            prevNode = None
             curNode = List.head
             if curNode.Next == None: #this list only has one element
                 List.head = None
@@ -86,5 +85,5 @@ workList = Linkedlist()
 workList.insertStart("This is something that i have made")
 workList.insertEnd("hello world")
 workList.traverse()
-print(workList.get_size()) #cant do current size you always have to have something return the size in python
-
+workList.deleteTop()
+workList.traverse()
