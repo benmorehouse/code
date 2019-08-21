@@ -11,9 +11,10 @@
 
 	binary search trees are trees but they only are allowed to have two leaf nodes
 
-
 	When you organize the tree, the leaf to the left of the root node is always less than the root and everyting to the 
 	right is greater. So essentially you do a binary sort and then you create the tree based off the final data
 
-	the reason that this is so fast is that everytime that you are doing something for the tree, the placement and
+	The reason that this is so fast is that everytime that you are doing something for the tree, the placement and
 	figuring out where to put it is already partially figured out	
+
+

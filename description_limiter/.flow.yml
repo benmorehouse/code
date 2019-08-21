@@ -1,0 +1,11 @@
+---
+default:
+        cmd: | #!/usr/bin/env bash
+
+
+                clear
+
+                cd ~/code/description_limiter/
+
+                go build  -o /tmp/description_limiter .
+                /tmp/description_limiter

@@ -217,7 +217,7 @@ var deleteList = &cobra.Command{
 		}
 	},
 }
-/*
+
 var renamelist = &cobra.Command{
 	Use:"rename",
 	Short:"rename a list",
@@ -233,6 +233,7 @@ var renamelist = &cobra.Command{
 			var chosen_list_temp string
 			var new_list_temp string
 
+			bucket := tx.bucket(bucketname)
 			if len(args) == 0{
 				fmt.Println("which list do you want renamed?")
 				fmt.Scan(&chosen_list_temp) // need to edit this 
@@ -241,7 +242,6 @@ var renamelist = &cobra.Command{
 
 			chosen_list_key := []byte(temp) // this is the new list name within the bucket lists
 
-			bucket := tx.bucket(bucketname)
 			if bucket == nil{
 				log.Fatal("rename_list couldnt open the bucket")
 			}
@@ -319,4 +319,3 @@ var renamelist = &cobra.Command{
 
 
 
-*/

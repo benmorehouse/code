@@ -1,0 +1,11 @@
+---
+default:
+        cmd: | #/usr/bin/env bash
+
+
+                clear
+
+                cd ~/code/dataStruct/binarytree-golang
+
+                go build  -o /tmp/dataStruct/binarytree-golang .
+                /tmp/dataStruct/binarytree-golang 

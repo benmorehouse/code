@@ -78,6 +78,10 @@ class Linkedlist():
     def get_size(List):
         return List.current_size
 
+
+
+
+# THis is all stuff that is declared then what is below is what we are actually doing
               
 
 

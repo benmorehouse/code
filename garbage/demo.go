@@ -5,7 +5,13 @@ import(
 )
 
 func main(){
-	fmt.Println("Hello world")
+	integer := 0
+	return_val(&integer)
+	fmt.Println(integer)
 }
 
+
+func return_val(mystuff *int){
+	*mystuff++
+}
 

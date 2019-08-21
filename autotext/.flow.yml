@@ -9,3 +9,5 @@ default:
 
                 go build  -o /tmp/autotext .
                 /tmp/autotext
+
+
