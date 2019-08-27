@@ -1,0 +1,9 @@
+---
+default:
+        cmd: | #!/usr/bin/env bash
+
+
+                clear
+                cd ~/code/htmlProject/itp/lab_1
+
+                open -a "Google Chrome"

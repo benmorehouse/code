@@ -8,6 +8,7 @@ import (
 	"os"
 	"io/ioutil"
 	"strings"
+	"time"
 )
 
 var bucketName = []byte("Lists")
@@ -72,7 +73,7 @@ var writeList = &cobra.Command{ // appends to the end of the bucket
 			err = bucket.Put(chosen_list_key,content)
 
 			for err != nil{
-				log.Println("error in write command on line 77",err)
+				log.Println("error in write command",err)
 			}
 			return nil
 		})
@@ -218,7 +219,7 @@ var deleteList = &cobra.Command{
 	},
 }
 
-var renamelist = &cobra.Command{
+var renameList = &cobra.Command{
 	Use:"rename",
 	Short:"rename a list",
 	Example:"./std rename or ./std rename current_list new_list",
@@ -228,27 +229,37 @@ var renamelist = &cobra.Command{
 			log.Println("Error opening database at renamelist command:",err)
 		}
 		defer db.Close()
+		show_lists(db)
 
 		err = db.Update(func(tx *bolt.Tx) error{
 			var chosen_list_temp string
 			var new_list_temp string
-
-			bucket := tx.bucket(bucketname)
-			if len(args) == 0{
-				fmt.Println("which list do you want renamed?")
-				fmt.Scan(&chosen_list_temp) // need to edit this 
-				input_temp := bucket.Get(input_temp)
-			}
-
-			chosen_list_key := []byte(temp) // this is the new list name within the bucket lists
-
+			bucket := tx.Bucket(bucketName)
 			if bucket == nil{
 				log.Fatal("rename_list couldnt open the bucket")
 			}
 
-			fmt.Println("Which list do you want renamed?")
+			if len(args) == 0{ // simply means they entered nothing
+				fmt.Println("which list do you want renamed?")
+				fmt.Scan(&chosen_list_temp)
+				input_temp := bucket.Get(input_temp)
+			}else if len(args) == 1{ // means they entered in a list but not the new name of the list
+				chosen_list_temp = (args[0])
+			}else if len(args) == 2{
+				chosen_list_temp = (args[0])
+				new_list_temp = (args[0])
+			}else{
+				fmt.Println("To rename a list you must add in the current list followed by new list name")
+				time.Sleep(time.Second * 1)
+			}
 
-			content := bucket.Get([]byte(chosen_list_key)) // this will return what is in the list
+
+			if chosen_list_temp == ""{
+				fmt.Println("Which list do you want renamed?")
+				fmt.Scan(&chosen_list_temp)
+			}
+
+			content := bucket.Get([]byte(chosen_list_temp)) // this will return what is in the list
 
 			if content == nil{ // this means that chose_list_key is not a key within the lists bucket
 				for content == nil{
@@ -256,26 +267,26 @@ var renamelist = &cobra.Command{
 					var temp string
 					fmt.Scan(&temp)
 					temp = strings.ToLower(strings.TrimSpace(temp))
-					chosen_list_key = []byte(temp)
-					content = bucket.Get([]byte(chosen_list_key))
+					chosen_list_temp = temp
+					content = bucket.Get([]byte(chosen_list_temp))
 				}
 			}
 
-			fmt.Println("What should the new name be")
-
+			if new_list_temp == ""{
+				fmt.Println("What should the new name be")
+				fmt.Scan(&new_list_temp)
+			}
 			var new_list string
-			fmt.Scan(&new_list)
-			new_list = strings.TrimSpace(ToLower(new_list))
+			new_list = strings.TrimSpace(strings.ToLower(new_list_temp))
 
-			err := bucket.Delete(chosen_list_key)
-
+			err := bucket.Delete([]byte(chosen_list_temp))
 			if err != nil{
 				log.Fatal("Couldnt delete list in rename function")
 			}
-
-			temp_content := strings.Fields(content)
+// Need to come here, create a system that takes in content, adds marks wherever there are \n, then does fields and joins
+			temp_content := strings.Fields(string(content))
 			temp_content[1] = new_list
-			content = strings.Join(temp_content, " ")
+			content = []byte(strings.Join(temp_content, " "))
 
 			err = bucket.Put([]byte(new_list),[]byte(content))
 
@@ -294,7 +305,7 @@ var renamelist = &cobra.Command{
 			temp_field := strings.Fields(string(show_list_temp))
 
 			for i , val := range temp_field{
-				if val == string(chosen_list_key){
+				if val == string(chosen_list_temp){
 					temp_field[i] = new_list
 				}
 			}
@@ -313,9 +324,4 @@ var renamelist = &cobra.Command{
 		}
 	},
 }
-
-
-
-
-
 

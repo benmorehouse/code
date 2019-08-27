@@ -23,10 +23,10 @@ func show_lists(db *bolt.DB) error {
 		log.Fatal("show_lists was given a null database")
 	}
 
-	err := db.update(func(tx *bolt.tx) error{
-		bucket := tx.bucket(bucketname)
+	err := db.Update(func(tx *bolt.Tx) error{
+		bucket := tx.Bucket(bucketName)
 		if bucket == nil{
-			log.fatal("show_lists couldnt open the bucket")
+			log.Fatal("show_lists couldnt open the bucket")
 		}
 
 		get_list := bucket.Get([]byte("show_lists"))
@@ -50,5 +50,37 @@ func show_lists(db *bolt.DB) error {
 
 	return err
 }
+
+func rc_content_manip(input, new_list  string)(string){
+// Need to come here, create a system that takes in content, adds marks wherever there are \n, then does fields and joins
+	var marker [0]int // used to keep place of where there ~
+	for i , val := range input{
+		if val == "~"{
+			val = "~"
+			marker = append(marker,i + 2)
+		}
+	}
+	temp_content := strings.Field(input)
+	temp_content[1] = new_list + "\n\n"
+	input = strings.Join(temp_content, " ")
+	for _ , val := range marker{
+		if input[val]!="~"{
+			continue
+		}else{
+			input[val] = "\n"
+		}
+	}
+	return input
+}
+
+
+
+
+
+
+
+
+
+
 
 
