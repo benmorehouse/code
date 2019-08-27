@@ -21,17 +21,18 @@ func rc_content_manip(input, new_list  string)(string){
 		}
 	}
 	temp_content := strings.Fields(input)
-	temp_content[1] = new_list + "\n\n"
-	input = strings.Join(temp_content, " ")
+	temp_content[0] = new_list + "\n\n"
+	input_temp := []byte(strings.Join(temp_content, " "))
 	for _ , val := range marker{
-		if input[val]!='~'{
+		if input_temp[val] != '~'{
 			continue
-		}else if val > len(input){
-			break
+		}else if val > len(input_temp){
+			break // prevents seg fault
 		}else{
-			input[val] = '\n'
+			input_temp[val] = '\n'   // have to change this to a byte slice
 		}
 	}
+	input = string(input_temp)
 	return input
 }
 

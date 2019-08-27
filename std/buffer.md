@@ -1,19 +1,13 @@
-# school
+# General
 
-#ITP104
-
-#Calc3
+	look at the article on linkedin for top companies to work for
+	Go into connectSC and start to apply for internships and job positions 
+	Go back to the career center and get the following things down
+		Is your resume good enough for right now
+		How to get more connected withe mentorship progam  	
 	
-	Try and get transfered into Neal's class
-
-#CSCI 170 
+	Go on connectsc and get the internships!!
+	Student Health Plan needs to be waived as soon as possible
+	Go through what don sent you and figure out which areas really interest you 
 	
-	Need to get the online book 
-	Read chapters 1,5,6
-
-#CSCI 104
-
-
-#RXRS
-
-# Hit MQ when you are finished
+# When you are finished hit MQ
