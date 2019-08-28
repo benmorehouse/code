@@ -16,5 +16,6 @@ func main(){
 	rootCmd.AddCommand(writeList)
 	rootCmd.AddCommand(deleteList)
 	rootCmd.AddCommand(renameList)
+	rootCmd.AddCommand(welcome)
 	rootCmd.Execute()
 }

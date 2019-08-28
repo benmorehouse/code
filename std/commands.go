@@ -321,4 +321,13 @@ var renameList = &cobra.Command{
 	},
 }
 
-
+var welcome = &cobra.Command{ // appends to the end of the bucket
+// store some data that is written by the user
+	Use: "welcome",
+	Short:"welcome message",
+	Run: func(cmd *cobra.Command, args []string){ // args is gonna be what we pass through 
+		// open tmp, let user input, then read line for line and add into bucket
+		fmt.Println("\n\n\t\t\t\t\t\t\t\tHELLO! WELCOME TO STD (SHIT TO DO)\n\n\t\t\t\t\tTHIS IS A CLI TASK MANAGER THAT CAN MULTITASK AS A NOTEPAD AND iMESSAGE HUB \n\n\t\t\t\t\t\t\t\t\tENJOY!")
+	time.Sleep(3 * time.Second)
+	},
+}

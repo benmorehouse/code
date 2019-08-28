@@ -19,6 +19,7 @@ alias cr='~/code/htmlProject/chromerefresh.sh'
 alias std='cd ~/code/std; ./std open; clear'
 alias stdc='cd ~/code/std; ./std create; clear'
 alias stdd='cd ~/code/std; ./std delete; clear'
+alias stdw='cd ~/code/std; ./std welcome; clear'
 export MB_KEY=ODJkYzk4ZDlmZjU0NmIyZDUwYWIzMjBlMTViMzFjYmU.gSsWxLeQKCc7FeAICM9WCW3KcGWWrb5dwlUU17unIQR15TIYbI6No63mzYdkbQsWKCEcglTd8uh7UlESxiFDNw
 
 # Setting PATH for Python# Setting PATH for Python 3.7
