@@ -11,20 +11,25 @@ func main(){
 	fmt.Println(input)
 }
 
-func rc_content_manip(input, new_list  string)(string){
+func rc_content_manip(input, new_list string)(string){
 // Need to come here, create a system that takes in content, adds marks wherever there are \n, then does fields and joins
 	var marker []int // used to keep place of where there ~
+	marker_temp := []byte(input)
 	for i , val := range input{
 		if string(val) == "\n"{
-			val = '~'
-			marker = append(marker,i + 2)
+			marker_temp[i] = '~' // right here is not registering it to input, only to value
+			marker = append(marker,i + 3)
 		}
 	}
+	input = string(marker_temp)
 	temp_content := strings.Fields(input)
 	temp_content[0] = new_list + "\n\n"
 	input_temp := []byte(strings.Join(temp_content, " "))
-	for _ , val := range marker{
+	for _ , val := range marker{ // marker is not working well 
 		if input_temp[val] != '~'{
+			fmt.Println("input_temp is:",string(input_temp[val]))
+			fmt.Println("before input_temp is:",string(input_temp[val-1]))
+			fmt.Println("test")
 			continue
 		}else if val > len(input_temp){
 			break // prevents seg fault
@@ -35,4 +40,6 @@ func rc_content_manip(input, new_list  string)(string){
 	input = string(input_temp)
 	return input
 }
+
+
 

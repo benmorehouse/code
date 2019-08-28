@@ -51,36 +51,31 @@ func show_lists(db *bolt.DB) error {
 	return err
 }
 
-func rc_content_manip(input, new_list  string)(string){
-// Need to come here, create a system that takes in content, adds marks wherever there are \n, then does fields and joins
-	var marker [0]int // used to keep place of where there ~
+func rc_content_manip(input, new_list string)(string){ // takes in content, puts new name on it and returns it
+	var marker []int // used to keep place of where there ~
+	marker_temp := []byte(input)
 	for i , val := range input{
-		if val == "~"{
-			val = "~"
-			marker = append(marker,i + 2)
+		if string(val) == "\n"{
+			marker_temp[i] = '~' // right here is not registering it to input, only to value
+			marker = append(marker,i + 3)
 		}
 	}
-	temp_content := strings.Field(input)
-	temp_content[1] = new_list + "\n\n"
-	input = strings.Join(temp_content, " ")
-	for _ , val := range marker{
-		if input[val]!="~"{
+	input = string(marker_temp)
+	temp_content := strings.Fields(input)
+	temp_content[0] = new_list + "\n\n"
+	input_temp := []byte(strings.Join(temp_content, " "))
+	for _ , val := range marker{ // marker is not working well 
+		if input_temp[val] != '~'{
 			continue
+		}else if val > len(input_temp){
+			break // prevents seg fault
 		}else{
-			input[val] = "\n"
+			input_temp[val] = '\n'   // have to change this to a byte slice
 		}
 	}
+	input = string(input_temp)
 	return input
-}
-
-
-
-
-
-
-
-
-
+}// it's not replacing the ~ with \n. Also not getting rid of the field shit and taking out the initial test piece like i thouhgt
 
 
 

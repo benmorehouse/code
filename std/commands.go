@@ -242,7 +242,6 @@ var renameList = &cobra.Command{
 			if len(args) == 0{ // simply means they entered nothing
 				fmt.Println("which list do you want renamed?")
 				fmt.Scan(&chosen_list_temp)
-				input_temp := bucket.Get(input_temp)
 			}else if len(args) == 1{ // means they entered in a list but not the new name of the list
 				chosen_list_temp = (args[0])
 			}else if len(args) == 2{
@@ -284,10 +283,7 @@ var renameList = &cobra.Command{
 				log.Fatal("Couldnt delete list in rename function")
 			}
 // Need to come here, create a system that takes in content, adds marks wherever there are \n, then does fields and joins
-			temp_content := strings.Fields(string(content))
-			temp_content[1] = new_list
-			content = []byte(strings.Join(temp_content, " "))
-
+			content = []byte(rc_content_manip(string(content), string(new_list))) // takes in content, puts new name and returns
 			err = bucket.Put([]byte(new_list),[]byte(content))
 
 			if err != nil{
@@ -324,4 +320,5 @@ var renameList = &cobra.Command{
 		}
 	},
 }
+
 
