@@ -1,0 +1,10 @@
+---
+default:
+        cmd: | #!/usr/bin/env bash
+
+
+                clear
+                cd ~/code/garbage/c++
+                clang++ -g main.cpp -o cs
+                ./cs
+

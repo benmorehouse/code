@@ -1,5 +1,50 @@
 package main
 
+import "fmt"
+
+func main(){
+	var mystring = "natalie is cute"
+	var isFalse = "nevermind, she ain"
+	fmt.Println(mystring)
+	fmt.Println(isFalse)
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*package main
+
 import(
 	"fmt"
 	"strings"
@@ -9,6 +54,7 @@ func main(){
 	input := "#Work \n hello world this is something that I am making \n if you are interested in anything tlike this you should go and check it out"
 	input = rc_content_manip(input, "mywork")
 	fmt.Println(input)
+.
 }
 
 func rc_content_manip(input, new_list string)(string){
@@ -42,4 +88,4 @@ func rc_content_manip(input, new_list string)(string){
 }
 
 
-
+*/

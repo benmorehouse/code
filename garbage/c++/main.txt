@@ -1,0 +1,73 @@
+#include <iostream>
+#include <string>
+#include <fstream>
+#include <sstream>
+
+int* manage_one_dimension(int* array, int size, bool allocate){
+	if(allocate){
+		array = new int[size];
+		return array;
+	}else{
+		delete[] array;
+		return NULL;
+	}
+}
+
+int get_count(std::string input){
+	std::stringstream mystream(input);
+	int count = 0;
+	int temp;
+	while (mystream >> temp){
+		count++;
+	}
+	return count;
+}
+
+int main(){
+	// need to look at how you dynamically allocate and deallocate 2d arrays
+/*	
+	int experiment_count = 5;
+	int* subjects_per_experiment = manage_one_dimension(subjects_per_experiment, experiment_count, true);
+	// allocating one integer that is of size 5
+
+	for (int i =0;i<5;i++){
+		subjects_per_experiment[i] = i;
+	}
+
+	int**example = new int*[experiment_count];
+	
+	for(int i=0;i<experiment_count;i++){
+		example[i]= new int[experiment_count];
+	}
+	for(int i=0;i<experiment_count;i++){
+		for(int j=0;j<experiment_count;j++){
+			example[i][j] = i+j;
+		}
+	}
+			
+	for(int i=0;i<experiment_count;i++){
+		for(int j=0;j<experiment_count;j++){
+			std::cout<<i<<" "<<j<<":"<<example[i][j]<<std::endl;
+		}
+	}
+
+	for (int i=0;i<experiment_count;i++){
+		delete[] example[i];
+	}
+
+	subjects_per_experiment = manage_one_dimension(subjects_per_experiment, experiment_count, false);
+	std::cout<<subjects_per_experiment<<std::endl;
+*/
+
+	std::string input = "1 2 4 5 3";
+	std::cout<<get_count(input)<<std::endl;
+}
+
+/*
+ * functions used to allocate and deallocate memory 
+ * array is the array that we are working with. Size is the size.
+ * if allocate is true, we allocate, otherwise deallocate
+ */
+
+
+
