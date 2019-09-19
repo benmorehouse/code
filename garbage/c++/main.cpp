@@ -1,7 +1,11 @@
+// exceptions
 #include <iostream>
+#include <string>
+#include <sstream>
 
 int main(){
-	int numbers[4];
-	double numbers[4];
+	std::string temp = " hello world";
+	temp+=" how are you today";
 }
+
 

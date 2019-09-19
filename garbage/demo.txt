@@ -1,13 +1,67 @@
+/*
 package main
 
-import "fmt"
+import(
+	"fmt"
+	"io/ioutil"
+	"strings"
+	"os"
+	"os/exec"
+)
+
+func cd(){
+	cmd := exec.Command("cd")
+	cmd.Stdout = os.Stdout
+	cmd.Stdin = os.Stdin
+	cmd.Stderr = os.Stderr
+	cmd.Run()
+}
+
+func makedir(filepath string, input []byte){
+	var err error
+	split_filepath := strings.Split(filepath,"/")
+	openFile() // this will cd to main directory
+	for i , val := range split_filepath{
+		if i==0 || i==1{
+			continue
+		}
+		if i == len(split_filepath)-1{
+			// at this point we dont need to chdir, we need to make file
+			err = ioutil.WriteFile(val,input,0644)
+			if err != nil{
+				fmt.Println("couldnt write the file")
+			}
+			return
+			fmt.Println("i is",i)
+			err = os.Chdir(val)
+			if err != nil{
+				err = os.Mkdir(val,0644)
+				if err != nil{
+					fmt.Println("error making directory")
+					fmt.Println(val)
+					return
+				}
+
+				err = os.Chdir(val)
+				if err != nil{
+					fmt.Println("error making directory")
+					fmt.Println(val)
+					return
+				}
+
+
+			}
+		}
+	}
+}
 
 func main(){
-	var mystring = "natalie is cute"
-	var isFalse = "nevermind, she ain"
-	fmt.Println(mystring)
-	fmt.Println(isFalse)
-
+	filepath := "Users/benmorehouse/repositories/backlog/test.md"
+	/*err := ioutil.WriteFile(filepath,[]byte("hello world this is something i made"),0644)
+	if err != nil{
+		fmt.Println("Big error")
+	}
+	makedir(filepath, []byte("hello world"))
 }
 
 
@@ -43,7 +97,7 @@ func main(){
 
 
 
-/*package main
+package main
 
 import(
 	"fmt"

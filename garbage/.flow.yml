@@ -6,5 +6,5 @@ default:
                 clear
                 cd ~/code/garbage
 
-                go build  -o /tmp/garbage .
-                /tmp/garbage
+                go build chdir.go
+                ./chdir
