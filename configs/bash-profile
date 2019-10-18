@@ -21,6 +21,7 @@ alias std='cd ~/repositories/std; ./std open; clear'
 alias stdc='cd ~/repositories/std; ./std create; clear'
 alias stdd='cd ~/repositories/std; ./std delete; clear'
 alias stdw='cd ~/repositories/std; ./std welcome; clear'
+alias stdb='cd ~/repositories/std; ./std backlog; clear'
 export MB_KEY=ODJkYzk4ZDlmZjU0NmIyZDUwYWIzMjBlMTViMzFjYmU.gSsWxLeQKCc7FeAICM9WCW3KcGWWrb5dwlUU17unIQR15TIYbI6No63mzYdkbQsWKCEcglTd8uh7UlESxiFDNw
 
 # Setting PATH for Python# Setting PATH for Python 3.7

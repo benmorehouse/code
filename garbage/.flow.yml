@@ -6,5 +6,5 @@ default:
                 clear
                 cd ~/code/garbage
 
-                go build chdir.go
-                ./chdir
+                go build goquery.go
+                ./goquery

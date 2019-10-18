@@ -46,12 +46,8 @@ class square : protected shape{
 };
 
 int main(){
-	triangle *tr1 = new triangle(4);
-	square *sqr1 = new square(4);
-	tr1->printme();
-	sqr1->printme();
-	delete tr1;
-	delete sqr1;
+	shape *var = new shape("triangle",3);
+	std::cout<<var->size<<std::endl;
 }
 
 /*

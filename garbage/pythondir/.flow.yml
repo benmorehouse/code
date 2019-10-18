@@ -1,0 +1,8 @@
+---
+default:
+        cmd: | #!/usr/bin/env bash
+
+
+                clear
+                cd ~/code/garbage/pythondir
+                python main.py
