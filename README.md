@@ -3,5 +3,4 @@
 
 ## Notes
 
-This is something to use to send text messages automatically to you 
-
+This is a repository of randomly trying things. It's all pretty busted, so I suggest not running it!
